@@ -1,14 +1,17 @@
-module regfile(input logic rs1
-		input logic rs2
-		input logic waddr
-		input logic we3
-		input logic wd3
+module regfile(input logic [4:0] rs1, rs2, 	//read address
+		input logic [4:0] waddr,   	//write address
+		input logic we3,		//write enable
+		input logic [31:0] wd3,		//write data
 		input logic clk,
-		output logic rd1,
-		output logic rd2);
+		output logic [31:0] rd1,rd2	//read data
+);	
+	logic [31:0] regs [31:0];
 
-	always_ff @(posedge clk)
-		//rd1 = val at rs1
-		//rd2 = val at rs2
-		//if we3 = 1, then set waddr to wd3	
+	always_ff @(posedge clk) begin
+		if (we3 && waddr != 0)
+			regs[waddr] <= wd3;
+	end
+	
+	assign rd1 = regs[rs1];
+	assign rd2 = regs[rs2];
 endmodule
