@@ -5,7 +5,7 @@ module regfile(input logic [4:0] rs1, rs2, 	//read address
 		input logic clk,
 		output logic [31:0] rd1,rd2	//read data
 );	
-	logic [31:0] regs [31:0];
+	logic [31:0] regs [0:31];
 
 	always_ff @(posedge clk) begin
 		if (we3 && waddr != 0)
